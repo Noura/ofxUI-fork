@@ -26,9 +26,7 @@
 ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanvas() {
     delete scrollbar;
     delete scrollbarTrack;
-    for (list<ofxUIWidget*>::iterator it = listItems.begin(); it != listItems.end(); it++) {
-        delete (*it);
-    }
+    listItems.clear();
 }
 
 ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
@@ -49,26 +47,24 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
     scrollbar = new ofxUIDraggableRect(x + w - scrollbar_w, y, scrollbar_w, scrollbar_h, *scrollbarTrack); //TODO should scrollbarTrack be passed in as a pointed instead of dereferencing like this?
 
     setContentHeight(h);
+    
+    setSnapping(false);
 }
 
 // TODO rename to addWidget
 // TODO shadow all other addWidget like functions so they don't do anything
-ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidgetToList(ofxUIWidget * widget, bool reflow) {
+ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidget(ofxUIWidget * widget, bool reflow) {
     listItems.push_back(widget);
-    addWidget(widget);
-
-    // TODO double check that this is still how parents work in ofxUI
-    widget->setParent(this);
-    widget->setRectParent(this->rect);
+    ofxUICanvas::addWidget(widget);
     if (reflow) reflowWidgets();
 }
 
 // TODO rename to removeWidget
-ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidgetFromList(list<ofxUIWidget*>::iterator it, bool reflow) {
+ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidget(list<ofxUIWidget*>::iterator it, bool reflow) {
     ofxUIWidget * w = *it;
     listItems.erase(it);
     
-    removeWidget(w);
+    ofxUICanvas::removeWidget(w);
     if (reflow) reflowWidgets();
 }
 

@@ -8,8 +8,8 @@
  *
  * For these things to happen automatically, a few restrictions are made on the
  * ofxUIScrollableCanvas:
- * To add widgets you should only use addWidgetToList
- * To remove widgets you should only use removeWidgetFromList
+ * To add widgets you can only use addWidgetToList
+ * To remove widgets you can only use removeWidgetFromList
  * You must tell an instance the height of its content using setContentHeight
  * TODO can I remove that last restriction?
  *
@@ -28,9 +28,12 @@ class ofxUIDynamicListVerticalScrollbarCanvas : private ofxUIScrollableCanvas
 public:
     ~ofxUIDynamicListVerticalScrollbarCanvas();
     ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources = NULL);
-    ofxUIWidget* addWidgetToList(ofxUIWidget * widget, bool reflow = true);
-    ofxUIWidget* removeWidgetFromList(list<ofxUIWidget*>::iterator it, bool reflow = true);
+
+    ofxUIWidget* addWidget(ofxUIWidget * widget, bool reflow = true);
+    ofxUIWidget* removeWidget(list<ofxUIWidget*>::iterator it, bool reflow = true);
+    // To get the iterator needed to remove a widget, you can get a reference to the list of widgets with this method
     list<ofxUIWidget*>* getWidgetList();
+    
     void reflowWidgets();
     void setContentHeight(float _contentHeight);
     float getContentHeight();

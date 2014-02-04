@@ -24,7 +24,7 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
 , listPadding(5.0) //TODO make this settable
 , scrollbar(NULL)
 , scrollbarTrack(NULL) {
-    scrollbar_w = OFX_UI_SCROLLBAR_W; 
+    scrollbar_w = OFX_UI_SCROLLBAR_W;
     scrollbar_h = OFX_UI_SCROLLBAR_H_MIN;
     // TODO is the kind member variable still used by ofxUI?
     kind = OFX_UI_WIDGET_DYNAMICLISTVERTICALSCROLLBARCANVAS;
@@ -49,10 +49,6 @@ ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidget(list<ofxUIWid
     
     ofxUICanvas::removeWidget(w);
     if (reflow) reflowWidgets();
-}
-
-list<ofxUIWidget*>* ofxUIDynamicListVerticalScrollbarCanvas::getWidgetList() {
-    return &listItems;
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::reflowWidgets() {
@@ -86,10 +82,6 @@ float ofxUIDynamicListVerticalScrollbarCanvas::getContentHeight() {
 
 ofRectangle ofxUIDynamicListVerticalScrollbarCanvas::getAvailableSpace() {
     return ofRectangle(rect->x, rect->y, rect->width - scrollbar_w, rect->height);
-}
-
-void ofxUIDynamicListVerticalScrollbarCanvas::setScrollbarImage(string imagePath) {
-    scrollbar->setImage(imagePath);
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::draw() {
@@ -174,4 +166,12 @@ void ofxUIDynamicListVerticalScrollbarCanvas::sortWidgets(bool (*f)(const ofxUIW
 
 void ofxUIDynamicListVerticalScrollbarCanvas::update() {
     ofxUIScrollableCanvas::update();
+}
+
+ofxUIDraggableRect* ofxUIDynamicListVerticalScrollbarCanvas::getScrollbar() {
+    return scrollbar;
+}
+
+list<ofxUIWidget*>* ofxUIDynamicListVerticalScrollbarCanvas::getWidgetList() {
+    return &listItems;
 }

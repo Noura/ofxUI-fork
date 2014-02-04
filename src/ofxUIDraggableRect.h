@@ -24,6 +24,7 @@ public:
     float getCenterY();
     void setHeight(float h);
     void setImage(string imagePath);
+    void removeImage();
     void draw();
     virtual void onMousePressed(ofMouseEventArgs &e);
     virtual void onMouseReleased(ofMouseEventArgs &e);

@@ -30,7 +30,7 @@ public:
     // Returns the bounds of the area that is not obscured by the scollbar or 
     // its vertical track.
     ofRectangle getAvailableSpace();
-    void setScrollbarImage(string imagePath);
+    ofxUIDraggableRect* getScrollbar();
     void draw();
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);

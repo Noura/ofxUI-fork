@@ -55,6 +55,11 @@ void ofxUIDraggableRect::setImage(string imagePath) {
     image->resize(width, height);
 }
 
+void ofxUIDraggableRect::removeImage() {
+    delete image;
+    image = NULL;
+}
+
 void ofxUIDraggableRect::draw() {
     ofxUIRectangle::draw();
     if (image) {

@@ -32,4 +32,5 @@
 #include "ofxUICanvas.h"
 #include "ofxUIScrollableCanvas.h"
 #include "ofxUISuperCanvas.h"
+#include "ofxUIDynamicListVerticalScrollbarCanvas.h"
 #include "ofxUITabBar.h"

@@ -61,3 +61,4 @@
 #include "ofxUIImage.h"
 #include "ofxUIBaseDraws.h"
 #include "ofxUIImageSampler.h"
+#include "ofxUIDraggableRect.h"

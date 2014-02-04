@@ -9,7 +9,6 @@
 
 #include "ofxUIDynamicListVerticalScrollbarCanvas.h"
 
-// TODO make these settable
 #define OFX_UI_SCROLLBAR_W_DEFAULT 15
 #define OFX_UI_SCROLLBAR_H_MIN_DEFAULT 25
 

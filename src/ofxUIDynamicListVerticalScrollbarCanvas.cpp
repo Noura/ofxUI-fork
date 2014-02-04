@@ -23,7 +23,7 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
 , scrollbar(NULL) {
     scrollbar_h = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
     scrollbar_h_min = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
-    // TODO is the kind member variable still used by ofxUI?
+
     kind = OFX_UI_WIDGET_DYNAMICLISTVERTICALSCROLLBARCANVAS;
 
     float scrollbar_w = OFX_UI_SCROLLBAR_W_DEFAULT;

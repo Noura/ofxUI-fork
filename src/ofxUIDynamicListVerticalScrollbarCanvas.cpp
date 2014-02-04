@@ -41,15 +41,12 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
     setSnapping(false);
 }
 
-// TODO rename to addWidget
-// TODO shadow all other addWidget like functions so they don't do anything
 ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidget(ofxUIWidget * widget, bool reflow) {
     listItems.push_back(widget);
     ofxUICanvas::addWidget(widget);
     if (reflow) reflowWidgets();
 }
 
-// TODO rename to removeWidget
 ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidget(list<ofxUIWidget*>::iterator it, bool reflow) {
     ofxUIWidget * w = *it;
     listItems.erase(it);
@@ -58,7 +55,6 @@ ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidget(list<ofxUIWid
     if (reflow) reflowWidgets();
 }
 
-// TODO rename to getWidgets
 list<ofxUIWidget*>* ofxUIDynamicListVerticalScrollbarCanvas::getWidgetList() {
     return &listItems;
 }

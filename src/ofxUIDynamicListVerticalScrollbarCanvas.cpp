@@ -31,8 +31,8 @@ ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanva
     }
 }
 
-ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h)
-: ofxUIScrollableCanvas(x, y, w, h) 
+ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
+: ofxUIScrollableCanvas(x, y, w, h, sharedResources)
 , init_x(x)
 , init_y(y)
 , init_w(w)
@@ -55,12 +55,7 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
 // TODO shadow all other addWidget like functions so they don't do anything
 ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidgetToList(ofxUIWidget * widget, bool reflow) {
     listItems.push_back(widget);
-
-    // TODO wtf why is this necessary? is it still necessary in new ofxUI?
-    if (widget->hasLabel() &&
-        widget->getKind() != OFX_UI_WIDGET_TEXTAREA) {
-        setLabelFont(((ofxUIWidgetWithLabel*)widget)->getLabelWidget());
-    }
+    addWidget(widget);
 
     // TODO double check that this is still how parents work in ofxUI
     widget->setParent(this);
@@ -72,7 +67,8 @@ ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidgetToList(ofxUIWidge
 ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::removeWidgetFromList(list<ofxUIWidget*>::iterator it, bool reflow) {
     ofxUIWidget * w = *it;
     listItems.erase(it);
-    delete w;
+    
+    removeWidget(w);
     if (reflow) reflowWidgets();
 }
 

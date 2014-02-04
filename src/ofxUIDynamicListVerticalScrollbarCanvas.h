@@ -27,7 +27,7 @@ class ofxUIDynamicListVerticalScrollbarCanvas : public ofxUIScrollableCanvas
 {
 public:
     ~ofxUIDynamicListVerticalScrollbarCanvas();
-    ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h);
+    ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources = NULL);
     ofxUIWidget* addWidgetToList(ofxUIWidget * widget, bool reflow = true);
     ofxUIWidget* removeWidgetFromList(list<ofxUIWidget*>::iterator it, bool reflow = true);
     list<ofxUIWidget*>* getWidgetList();

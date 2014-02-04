@@ -22,6 +22,7 @@ public:
     bool isHit();
     float getCenterX();
     float getCenterY();
+    ofxUIRectangle * getBounds();
     void setHeight(float h);
     void setImage(string imagePath);
     void removeImage();

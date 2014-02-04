@@ -41,6 +41,10 @@ float ofxUIDraggableRect::getCenterY() {
     return getMinY() + height/2;
 }
 
+ofxUIRectangle* ofxUIDraggableRect::getBounds() {
+    return bounds;
+}
+
 void ofxUIDraggableRect::setHeight(float h) {
     ofxUIRectangle::setHeight(h);
     if (image) {

@@ -10,27 +10,26 @@
 #include "ofxUIDynamicListVerticalScrollbarCanvas.h"
 
 // TODO make these settable
-#define OFX_UI_SCROLLBAR_W 15
-#define OFX_UI_SCROLLBAR_H_MIN 25
+#define OFX_UI_SCROLLBAR_W_DEFAULT 15
+#define OFX_UI_SCROLLBAR_H_MIN_DEFAULT 25
 
 ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanvas() {
     delete scrollbar;
-    delete scrollbarTrack;
     listItems.clear();
 }
 
 ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
 : ofxUIScrollableCanvas(x, y, w, h, sharedResources)
 , listPadding(5.0) //TODO make this settable
-, scrollbar(NULL)
-, scrollbarTrack(NULL) {
-    scrollbar_w = OFX_UI_SCROLLBAR_W;
-    scrollbar_h = OFX_UI_SCROLLBAR_H_MIN;
+, scrollbar(NULL) {
+    scrollbar_h = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
+    scrollbar_h_min = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
     // TODO is the kind member variable still used by ofxUI?
     kind = OFX_UI_WIDGET_DYNAMICLISTVERTICALSCROLLBARCANVAS;
 
-    scrollbarTrack = new ofRectangle(x + w - scrollbar_w, y, scrollbar_w, h);
-    scrollbar = new ofxUIDraggableRect(x + w - scrollbar_w, y, scrollbar_w, scrollbar_h, *scrollbarTrack); //TODO should scrollbarTrack be passed in as a pointed instead of dereferencing like this?
+    float scrollbar_w = OFX_UI_SCROLLBAR_W_DEFAULT;
+    ofRectangle scrollbarTrack(x + w - scrollbar_w, y, scrollbar_w, h);
+    scrollbar = new ofxUIDraggableRect(x + w - scrollbar_w, y, scrollbar_w, scrollbar_h, scrollbarTrack);
 
     setContentHeight(h);
     
@@ -69,19 +68,34 @@ void ofxUIDynamicListVerticalScrollbarCanvas::setContentHeight(float _contentHei
     if (_contentHeight <= sRectH) {
         scrollbar_h = sRectH;
     } else {
-        scrollbar_h = CLAMP(sRectH * sRectH / contentHeight, OFX_UI_SCROLLBAR_H_MIN, contentHeight);
+        scrollbar_h = CLAMP(sRectH * sRectH / contentHeight, scrollbar_h_min, contentHeight);
     }
     scrollbar->setHeight(scrollbar_h);
     scrollTop = sRectY + scrollbar->height/2;
     scrollBottom = sRectY + sRectH - scrollbar->height/2;
 }
 
+
 float ofxUIDynamicListVerticalScrollbarCanvas::getContentHeight() {
     return contentHeight;
 }
 
+void ofxUIDynamicListVerticalScrollbarCanvas::setScrollbarWidth(float w) {
+    ofxUIRectangle* track = scrollbar->getBounds();
+    scrollbar->setWidth(w);
+    track->setWidth(w);
+    // keep scrollbar and track right aligned
+    float x = sRect->getX() + sRect->getWidth() - w;
+    scrollbar->setX(x);
+    track->setX(x);
+}
+
+void ofxUIDynamicListVerticalScrollbarCanvas::setScrollbarMinHeight(float h) {
+    scrollbar_h_min = h;
+}
+
 ofRectangle ofxUIDynamicListVerticalScrollbarCanvas::getAvailableSpace() {
-    return ofRectangle(rect->x, rect->y, rect->width - scrollbar_w, rect->height);
+    return ofRectangle(rect->x, rect->y, rect->width - scrollbar->getWidth(), rect->height);
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::draw() {
@@ -122,7 +136,7 @@ void ofxUIDynamicListVerticalScrollbarCanvas::mousePressed(int x, int y, int but
     if (!sRect->inside(x, y)) {
         return;
     }
-    if (!scrollbarTrack->inside(x, y)) {
+    if (!scrollbar->getBounds()->inside(x, y)) {
         ofxUIScrollableCanvas::mousePressed(x, y, button);
     }
 }
@@ -131,7 +145,7 @@ void ofxUIDynamicListVerticalScrollbarCanvas::mouseReleased(int x, int y, int bu
     if (!sRect->inside(x, y)) {
         return;
     }
-    if (!scrollbarTrack->inside(x, y)) {
+    if (!scrollbar->getBounds()->inside(x, y)) {
         ofxUIScrollableCanvas::mouseReleased(x, y, button);
     }
 }

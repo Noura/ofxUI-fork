@@ -31,6 +31,9 @@ public:
     // its vertical track.
     ofRectangle getAvailableSpace();
     ofxUIDraggableRect* getScrollbar();
+    void setScrollbarWidth(float w);
+    void setScrollbarMinHeight(float h);
+    
     void draw();
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -45,11 +48,10 @@ public:
     
 protected:
     float listPadding;
-    float scrollbar_w, scrollbar_h;
+    float scrollbar_h, scrollbar_h_min;
     float contentHeight;
     float scrollTop, scrollBottom;
     ofxUIDraggableRect * scrollbar;
-    ofRectangle * scrollbarTrack;
     std::list<ofxUIWidget*> listItems;
 };
 

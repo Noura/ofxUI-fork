@@ -37,6 +37,7 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
 
 ofxUIWidget* ofxUIDynamicListVerticalScrollbarCanvas::addWidget(ofxUIWidget * widget, bool reflow) {
     listItems.push_back(widget);
+    widget->getRect()->setX(sRect->getX() + OFX_UI_GLOBAL_PADDING);
     ofxUICanvas::addWidget(widget);
     if (reflow) reflowWidgets();
 }
@@ -118,12 +119,9 @@ void ofxUIDynamicListVerticalScrollbarCanvas::draw() {
         if ((*it)->isVisible() && (*it)->getRect()->rInside(*sRect)) {
             ofxUIWidget * w = (*it);
             w->draw();
-            if (w->hasLabel() &&
-                w->getKind() != OFX_UI_WIDGET_TEXTAREA) {
-                ((ofxUIWidgetWithLabel*)w)->getLabelWidget()->draw();
-                //TODO wtf? why not just draw all widgets?
+            for (int i = 0; i < w->getEmbeddedWidgetsSize(); i++) {
+                w->getEmbeddedWidget(i)->draw();
             }
-            // TODO handle embedded widgets? what are embedded widgets?
         }
     }
     scrollbar->draw();

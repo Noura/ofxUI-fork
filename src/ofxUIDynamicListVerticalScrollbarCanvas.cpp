@@ -187,3 +187,7 @@ void ofxUIDynamicListVerticalScrollbarCanvas::sortWidgets(bool (*f)(const ofxUIW
     listItems.sort(f);
     reflowWidgets();
 }
+
+void ofxUIDynamicListVerticalScrollbarCanvas::update() {
+    ofxUIScrollableCanvas::update();
+}

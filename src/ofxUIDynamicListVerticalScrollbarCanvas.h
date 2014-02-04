@@ -23,7 +23,7 @@
 #include "ofxUIScrollableCanvas.h"
 #include "ofxUIDraggableRect.h"
 
-class ofxUIDynamicListVerticalScrollbarCanvas : public ofxUIScrollableCanvas
+class ofxUIDynamicListVerticalScrollbarCanvas : private ofxUIScrollableCanvas
 {
 public:
     ~ofxUIDynamicListVerticalScrollbarCanvas();
@@ -47,7 +47,9 @@ public:
     void mouseDragged(int x, int y, int button);
     void scrollToBottom();
     void sortWidgets(bool (*f)(const ofxUIWidget *, const ofxUIWidget *));
-
+    
+    void update();
+    
 protected:
     //TODO try to use sRect dimensions instead of init_*
     float init_x, init_y, init_w, init_h;

@@ -20,7 +20,8 @@ ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanva
 ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
 : ofxUIScrollableCanvas(x, y, w, h, sharedResources)
 , listPadding(OFX_UI_GLOBAL_WIDGET_SPACING)
-, scrollbar(NULL) {
+, scrollbar(NULL)
+, show_scrollbar(true) {
     scrollbar_h = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
     scrollbar_h_min = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
 
@@ -66,8 +67,10 @@ void ofxUIDynamicListVerticalScrollbarCanvas::setContentHeight(float _contentHei
     float sRectH = sRect->getHeight();
     float sRectY = sRect->getY();
     if (_contentHeight <= sRectH) {
+        show_scrollbar = false;
         scrollbar_h = sRectH;
     } else {
+        show_scrollbar = true;
         scrollbar_h = CLAMP(sRectH * sRectH / contentHeight, scrollbar_h_min, contentHeight);
     }
     scrollbar->setHeight(scrollbar_h);
@@ -92,6 +95,14 @@ void ofxUIDynamicListVerticalScrollbarCanvas::setScrollbarWidth(float w) {
 
 void ofxUIDynamicListVerticalScrollbarCanvas::setScrollbarMinHeight(float h) {
     scrollbar_h_min = h;
+}
+
+void ofxUIDynamicListVerticalScrollbarCanvas::showScrollbar() {
+    show_scrollbar = true;
+}
+
+void ofxUIDynamicListVerticalScrollbarCanvas::hideScrollbar() {
+    show_scrollbar = false;
 }
 
 ofRectangle ofxUIDynamicListVerticalScrollbarCanvas::getAvailableSpace() {
@@ -124,7 +135,9 @@ void ofxUIDynamicListVerticalScrollbarCanvas::draw() {
             }
         }
     }
-    scrollbar->draw();
+    if (show_scrollbar) {
+        scrollbar->draw();
+    }
 
     ofxUIPopStyle();
 }

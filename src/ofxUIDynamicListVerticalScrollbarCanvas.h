@@ -33,6 +33,8 @@ public:
     ofxUIDraggableRect* getScrollbar();
     void setScrollbarWidth(float w);
     void setScrollbarMinHeight(float h);
+    void showScrollbar();
+    void hideScrollbar();
     
     void setListPadding(float padding);
     
@@ -54,6 +56,7 @@ protected:
     float contentHeight;
     float scrollTop, scrollBottom;
     ofxUIDraggableRect * scrollbar;
+    bool show_scrollbar;
     std::list<ofxUIWidget*> listItems;
 };
 

@@ -11,6 +11,7 @@
 
 #define OFX_UI_SCROLLBAR_W_DEFAULT 15
 #define OFX_UI_SCROLLBAR_H_MIN_DEFAULT 25
+#define OFX_UI_LIST_PADDING_DEFAULT 5.0
 
 ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanvas() {
     delete scrollbar;
@@ -19,7 +20,7 @@ ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanva
 
 ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
 : ofxUIScrollableCanvas(x, y, w, h, sharedResources)
-, listPadding(5.0) //TODO make this settable
+, listPadding(OFX_UI_LIST_PADDING_DEFAULT)
 , scrollbar(NULL) {
     scrollbar_h = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
     scrollbar_h_min = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
@@ -174,6 +175,11 @@ void ofxUIDynamicListVerticalScrollbarCanvas::scrollToBottom() {
 
 void ofxUIDynamicListVerticalScrollbarCanvas::sortWidgets(bool (*f)(const ofxUIWidget *, const ofxUIWidget *)) {
     listItems.sort(f);
+    reflowWidgets();
+}
+
+void ofxUIDynamicListVerticalScrollbarCanvas::setListPadding(float padding) {
+    listPadding = padding;
     reflowWidgets();
 }
 

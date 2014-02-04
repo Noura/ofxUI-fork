@@ -34,6 +34,8 @@ public:
     void setScrollbarWidth(float w);
     void setScrollbarMinHeight(float h);
     
+    void setListPadding(float padding);
+    
     void draw();
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);

@@ -21,10 +21,6 @@ ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanva
 
 ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas(float x, float y, float w, float h, ofxUICanvas * sharedResources)
 : ofxUIScrollableCanvas(x, y, w, h, sharedResources)
-, init_x(x)
-, init_y(y)
-, init_w(w)
-, init_h(h)
 , listPadding(5.0) //TODO make this settable
 , scrollbar(NULL)
 , scrollbarTrack(NULL) {
@@ -72,14 +68,16 @@ void ofxUIDynamicListVerticalScrollbarCanvas::reflowWidgets() {
 
 void ofxUIDynamicListVerticalScrollbarCanvas::setContentHeight(float _contentHeight) {
     contentHeight = _contentHeight;
-    if (_contentHeight <= init_h) {
-        scrollbar_h = init_h;
+    float sRectH = sRect->getHeight();
+    float sRectY = sRect->getY();
+    if (_contentHeight <= sRectH) {
+        scrollbar_h = sRectH;
     } else {
-        scrollbar_h = CLAMP(init_h * init_h / contentHeight, OFX_UI_SCROLLBAR_H_MIN, contentHeight);
+        scrollbar_h = CLAMP(sRectH * sRectH / contentHeight, OFX_UI_SCROLLBAR_H_MIN, contentHeight);
     }
     scrollbar->setHeight(scrollbar_h);
-    scrollTop = init_y + scrollbar->height/2;
-    scrollBottom = init_y + init_h - scrollbar->height/2;
+    scrollTop = sRectY + scrollbar->height/2;
+    scrollBottom = sRectY + sRectH - scrollbar->height/2;
 }
 
 float ofxUIDynamicListVerticalScrollbarCanvas::getContentHeight() {
@@ -147,22 +145,26 @@ void ofxUIDynamicListVerticalScrollbarCanvas::mouseReleased(int x, int y, int bu
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::mouseDragged(int x, int y, int button) {
+    float sRectH = sRect->getHeight();
+    float sRectY = sRect->getY();
     if (scrollbar->isHit() && scrollBottom != scrollTop) {
         float scrollPercent = (scrollbar->getCenterY() - scrollTop) / (scrollBottom - scrollTop);
         scrollPercent = CLAMP(scrollPercent, 0.0, 1.0);
-        rect->y = init_y - scrollPercent * (contentHeight - init_h);
+        rect->y = sRectY - scrollPercent * (contentHeight - sRectH);
     } else {
         ofxUIScrollableCanvas::mouseDragged(x, y, button);
-        float scrollPercent = (init_y - rect->y) / (contentHeight - init_h);
+        float scrollPercent = (sRectY - rect->y) / (contentHeight - sRectH);
         scrollPercent = CLAMP(scrollPercent, 0.0, 1.0);
-        float scrollbarY = init_y + scrollPercent * (init_h - scrollbar->height);
+        float scrollbarY = sRectY + scrollPercent * (sRectH - scrollbar->height);
         scrollbar->y = scrollbarY;
     }
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::scrollToBottom() {
-    rect->y = init_y - (contentHeight - init_h);
-    scrollbar->y = init_y + (init_h - scrollbar->height);
+    float sRectH = sRect->getHeight();
+    float sRectY = sRect->getY();
+    rect->y = sRectY - (contentHeight - sRectH);
+    scrollbar->y = sRectY + (sRectH - scrollbar->height);
 }
 
 void ofxUIDynamicListVerticalScrollbarCanvas::sortWidgets(bool (*f)(const ofxUIWidget *, const ofxUIWidget *)) {

@@ -44,8 +44,6 @@ public:
     void update();
     
 protected:
-    //TODO try to use sRect dimensions instead of init_*
-    float init_x, init_y, init_w, init_h;
     float listPadding;
     float scrollbar_w, scrollbar_h;
     float contentHeight;

@@ -1,17 +1,7 @@
 /*
- * ofxUIDynamicListVerticalScrollbarCanvas.h
+ * ofxUIDynamicListVerticalScrollbarCanvas.cpp
  *
- * Designed for vertically scrolling lists of dynamic content.
- * Add and remove widgets and have their positions automatically laid out in a
- * vertical list on the canvas.
- * A scrollbar automatically resizes itself based on the height of the content.
- *
- * For these things to happen automatically, a few restrictions are made on the
- * ofxUIScrollableCanvas:
- * To add widgets you should only use addWidgetToList
- * To remove widgets you should only use removeWidgetFromList
- * You must tell an instance the height of its content using setContentHeight
- * TODO can I remove that last restriction?
+ * Designed for vertically scrolling lists of dynamic content. Add and remove widgets and have their positions automatically laid out in a vertical list on the canvas. There is a scrollbar that automatically resizes itself based on the height of the content.
  *
  * Created on: Sep 13, 2013
  *     Author: noura

@@ -10,8 +10,6 @@
  * ofxUIScrollableCanvas:
  * To add widgets you can only use addWidgetToList
  * To remove widgets you can only use removeWidgetFromList
- * You must tell an instance the height of its content using setContentHeight
- * TODO can I remove that last restriction?
  *
  * Created on: Sep 13, 2013
  *     Author: noura

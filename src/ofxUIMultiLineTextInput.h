@@ -51,7 +51,7 @@ public:
 
     string getTextString();
     void setTextString(string s);
-    void setVisible();
+    void setVisible(bool _visible);
     bool isClicked();
     ofxUITextArea* getTextArea();
     void setTriggerType(int _triggerType);

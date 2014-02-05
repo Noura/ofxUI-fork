@@ -444,7 +444,7 @@ void ofxUIMultiLineTextInput::setTextString(string s) {
     cursorChar = 0;
 }
 
-void ofxUIMultiLineTextInput::setVisible() {
+void ofxUIMultiLineTextInput::setVisible(bool _visible) {
     visible = _visible;
     textArea->setVisible(visible);
 }

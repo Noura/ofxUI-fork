@@ -9,8 +9,8 @@
 
 #include "ofxUIDynamicListVerticalScrollbarCanvas.h"
 
-#define OFX_UI_SCROLLBAR_W_DEFAULT 15
-#define OFX_UI_SCROLLBAR_H_MIN_DEFAULT 25
+const float ofxUIDynamicListVerticalScrollbarCanvas::scrollbarDefaultWidth = 15.0;
+const float ofxUIDynamicListVerticalScrollbarCanvas::scrollbarDefaultMinHeight = 25.0;
 
 ofxUIDynamicListVerticalScrollbarCanvas::~ofxUIDynamicListVerticalScrollbarCanvas() {
     delete scrollbar;
@@ -22,12 +22,12 @@ ofxUIDynamicListVerticalScrollbarCanvas::ofxUIDynamicListVerticalScrollbarCanvas
 , listPadding(OFX_UI_GLOBAL_WIDGET_SPACING)
 , scrollbar(NULL)
 , show_scrollbar(true) {
-    scrollbar_h = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
-    scrollbar_h_min = OFX_UI_SCROLLBAR_H_MIN_DEFAULT;
+    scrollbar_h = scrollbarDefaultMinHeight;
+    scrollbar_h_min = scrollbarDefaultMinHeight;
 
     kind = OFX_UI_WIDGET_DYNAMICLISTVERTICALSCROLLBARCANVAS;
 
-    float scrollbar_w = OFX_UI_SCROLLBAR_W_DEFAULT;
+    float scrollbar_w = scrollbarDefaultWidth;
     ofRectangle scrollbarTrack(x + w - scrollbar_w, y, scrollbar_w, h);
     scrollbar = new ofxUIDraggableRect(x + w - scrollbar_w, y, scrollbar_w, scrollbar_h, scrollbarTrack);
 

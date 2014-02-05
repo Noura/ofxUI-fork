@@ -50,6 +50,9 @@ public:
     
     void update();
     
+    static const float scrollbarDefaultWidth;
+    static const float scrollbarDefaultMinHeight;
+    
 protected:
     float listPadding;
     float scrollbar_h, scrollbar_h_min;

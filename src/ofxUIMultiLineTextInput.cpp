@@ -13,11 +13,8 @@ ofxUIMultiLineTextInput::~ofxUIMultiLineTextInput() {
     delete textArea;
 }
 
-ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textString, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM_SIZE)
+ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textString, float w, float h, float x, float y, int _size)
 : ofxUIWidget()
-, name(_name)
-, defaultstring(_textString)
-, kind(OFX_UI_WIDGET_MULTILINETEXTINPUT)
 , clicked(false)
 , autoclear(true)
 , triggerOnClick(true)
@@ -30,6 +27,10 @@ ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textStrin
 , xCorrection(0) // TODO fix it so I don't need this hack
 , yCorrection(0)
 {
+    name = string(_name);
+    defaultstring = string(_textString);
+    kind = OFX_UI_WIDGET_MULTILINETEXTINPUT;
+    
     // TODO this is all a bad hack
     float margin_guess = 2; // TODO fix it so I don't need this hack
     paddedRect = new ofxUIRectangle(x + margin_guess, y + margin_guess, w - 2.0 * margin_guess, h - 2.0 * margin_guess);

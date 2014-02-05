@@ -14,6 +14,7 @@
 // TODO i think this is mac osx only
 #define OFXUI_KEY_BACK_QUOTE 161
 
+#include "ofxUILabel.h"
 #include "ofxUIWidgetWithLabel.h"
 #include "ofxUITextArea.h"
 
@@ -65,6 +66,7 @@ public:
 
 protected:
     ofxUITextArea *textArea;
+    string defaultstring;
 
     bool clicked, autoclear, triggerOnClick;
     int triggerType;

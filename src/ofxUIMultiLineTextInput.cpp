@@ -120,11 +120,7 @@ void ofxUIMultiLineTextInput::drawCursor() {
 
     string beforeCursor = "";
     if (textArea->textLines.size() > 0) {
-        if (textArea->password) {
-            beforeCursor = textArea->passwordString(cursorChar);
-        } else {
-            beforeCursor = textArea->textLines[cursorLine].substr(0, cursorChar);
-        }
+        beforeCursor = textArea->textLines[cursorLine].substr(0, cursorChar);
     }
 
     // we need to put "." on both ends of the string so that the width of
@@ -477,12 +473,4 @@ void ofxUIMultiLineTextInput::setAutoClear(bool _autoclear) {
 
 void ofxUIMultiLineTextInput::setTriggerOnClick(bool _triggerOnClick) {
     triggerOnClick = _triggerOnClick;
-}
-
-bool ofxUIMultiLineTextInput::isPassword() {
-    return textArea->password;
-}
-
-void ofxUIMultiLineTextInput::isPassword(bool val) {
-    textArea->password = val;
 }

@@ -194,3 +194,13 @@ void ofxUITextArea::setDrawShadow(bool _drawShadow)
 {
     drawShadow = _drawShadow;
 }
+
+
+float ofxUITextArea::getLineBottomY(int line_index) {
+    return rect->getY() + (line_index + 1) * (lineHeight + lineSpaceSize) - lineSpaceSize;
+}
+
+float ofxUITextArea::getLineTopY(int line_index) {
+    return getLineBottomY(line_index) - lineHeight;
+}
+

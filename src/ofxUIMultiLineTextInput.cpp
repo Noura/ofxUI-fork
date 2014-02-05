@@ -26,6 +26,7 @@ ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textStrin
 , shiftKeyPressed(false)
 , xCorrection(0) // TODO fix it so I don't need this hack
 , yCorrection(0)
+, cursorWidth(2.0)
 {
     name = string(_name);
     defaultstring = string(_textString);
@@ -38,10 +39,10 @@ ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textStrin
     paddedRect->setParent(rect);
 
     textArea = new ofxUITextArea(name, defaultstring, rect->width, rect->height, rect->x, rect->y, _size);
-    textArea->setParent(this);
-
-    cursorWidth = textArea->getLabelWidget()->getStringWidth(".");
+    addEmbeddedWidget(textArea);
 }
+
+// TODO let the user set the cursor width with a float or to be the same width as a character in the textArea's font
 
 void ofxUIMultiLineTextInput::moveCursorBackward() {
     if(cursorChar > 0) {

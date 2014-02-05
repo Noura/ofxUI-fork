@@ -109,7 +109,8 @@ int ofxUIMultiLineTextInput::setCursorPosition(int stringIndex) {
 
 void ofxUIMultiLineTextInput::clearText() {
     textArea->textstring.clear();
-    textArea->formatDisplayString();
+    //textArea->formatDisplayString();
+    textArea->formatTextString();
     cursorChar = 0;
     cursorLine = 0;
 }
@@ -119,11 +120,7 @@ void ofxUIMultiLineTextInput::drawCursor() {
 
     string beforeCursor = "";
     if (textArea->textLines.size() > 0) {
-        if (textArea->password) {
-            beforeCursor = textArea->passwordString(cursorChar);
-        } else {
-            beforeCursor = textArea->textLines[cursorLine].substr(0, cursorChar);
-        }
+        beforeCursor = textArea->textLines[cursorLine].substr(0, cursorChar);
     }
 
     // we need to put "." on both ends of the string so that the width of
@@ -159,7 +156,7 @@ void ofxUIMultiLineTextInput::drawFill() {
     {
         ofxUIFill(); 
         ofxUISetColor(color_fill);
-        textArea->getLabelWidget()->drawString(rect->x + textArea->xCorrection + 2.0, yCorrection + textArea->getLineBottomY(0), defaultstring);
+        textArea->getLabelWidget()->drawString(rect->x + 2.0, yCorrection + textArea->getLineBottomY(0), defaultstring);
     }
 }
 
@@ -226,7 +223,8 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                     int i = getStringIndex();
                     if (i > 0) {
                         textArea->textstring.erase(i - 1, 1);
-                        textArea->formatDisplayString();
+                        //textArea->formatDisplayString();
+                        textArea->formatTextString();
                         setCursorPosition(i - 1);
                     }
                 }
@@ -239,7 +237,8 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                     int i = getStringIndex();
                     if (i < textArea->textstring.size()) {
                         textArea->textstring.erase(i, 1);
-                        textArea->formatDisplayString();
+                        //textArea->formatDisplayString();
+                        textArea->formatTextString();
                         setCursorPosition(i);
                     }
                 }
@@ -251,7 +250,6 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                 triggerEvent(this);
                 if(autoclear) {
                     string input = textArea->textstring.substr();
-                    ofNotifyEvent(inputSubmitted, input, this);
                     clearText();
                     clicked = true;
                 }
@@ -347,7 +345,8 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                 }
                 int i = getStringIndex();
                 textArea->textstring.insert(i, 1, c);
-                textArea->formatDisplayString();
+                //textArea->formatDisplayString();
+                textArea->formatTextString();
                 setCursorPosition(i + 1);
             }
                 break;
@@ -445,7 +444,7 @@ void ofxUIMultiLineTextInput::setTextString(string s) {
     cursorChar = 0;
 }
 
-void ofxUIMultiLineTextInput::setVisible() {
+void ofxUIMultiLineTextInput::setVisible(bool _visible) {
     visible = _visible;
     textArea->setVisible(visible);
 }
@@ -467,18 +466,10 @@ int ofxUIMultiLineTextInput::getTriggerType() {
 }
 
 //TODO make sure trigger types work. also what is setTriggerOnClick for? how is that different than the other triggers?
-void setAutoClear(bool _autoclear) {
+void ofxUIMultiLineTextInput::setAutoClear(bool _autoclear) {
     autoclear = _autoclear;
 }
 
-void setTriggerOnClick(bool _triggerOnClick) {
+void ofxUIMultiLineTextInput::setTriggerOnClick(bool _triggerOnClick) {
     triggerOnClick = _triggerOnClick;
-}
-
-bool isPassword() {
-    return textArea->password;
-}
-
-void isPassword(bool val) {
-    textArea->password = val;
 }

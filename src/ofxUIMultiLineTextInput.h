@@ -51,7 +51,7 @@ public:
 
     string getTextString();
     void setTextString(string s);
-    void setVisible();
+    void setVisible(bool _visible);
     bool isClicked();
     ofxUITextArea* getTextArea();
     void setTriggerType(int _triggerType);
@@ -59,8 +59,6 @@ public:
     //TODO make sure trigger types work. also what is setTriggerOnClick for? how is that different than the other triggers?
     void setAutoClear(bool _autoclear);
     void setTriggerOnClick(bool _triggerOnClick);
-    bool isPassword();
-    void isPassword(bool val);
 
     float xCorrection, yCorrection; // TODO should not need these
 

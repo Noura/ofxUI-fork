@@ -41,7 +41,12 @@ public:
     void formatTextString();
 	void setParent(ofxUIWidget *_parent);
     void setDrawShadow(bool _drawShadow);
-    
+
+    // returns the y position of the bottom or top of the line indicated by
+    // line_index, where the first line is 0
+    float getLineBottomY(int line_index);
+    float getLineTopY(int line_index);
+
 protected:    
 	string textstring;
     vector<string> textLines;

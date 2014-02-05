@@ -29,6 +29,18 @@ ofxUIDropDownList::ofxUIDropDownList(string _name, vector<string> items, float w
 {
     init(_name, items, w, x, y, _size);
 }
+ofxUIDropDownList::ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size)
+{
+    init(_name, items, w, x, y, _size);
+}
+ofxUIDropDownList::ofxUIDropDownList(float w, string _name, vector<string> items, int _size)
+{
+    init(_name, items, w, _size);
+}
+ofxUIDropDownList::ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size)
+{
+    init(_name, items, 0, x, y, _size);
+}
 
 void ofxUIDropDownList::init(string _name, vector<string> items, float w, float x, float y, int _size)
 {
@@ -115,6 +127,13 @@ void ofxUIDropDownList::addToggle(string toggleName)
     ltoggle->setVisible(*value);
     addEmbeddedWidget(ltoggle);
     toggles.push_back(ltoggle);
+    if(parent != NULL)
+    {
+        parent->addWidget(ltoggle);
+        
+    }
+    ltoggle->setParent(this);
+    ltoggle->setRectParent(rect);    
     ltoggle->setModal(modal);
     if(isOpen())
     {
@@ -224,6 +243,18 @@ vector<ofxUIWidget *> & ofxUIDropDownList::getSelected()
 vector<int> & ofxUIDropDownList::getSelectedIndeces()
 {
     return selectedIndeces;
+}
+
+vector<string> ofxUIDropDownList::getSelectedNames()
+{
+    vector<string> names;
+    
+    for(vector<ofxUIWidget *>::iterator it = selected.begin(); it != selected.end(); ++it)
+    {
+        ofxUILabelToggle *lt = (ofxUILabelToggle *) (*it);
+        names.push_back(lt->getName());
+    }
+    return names;
 }
 
 void ofxUIDropDownList::setLabelText(string labeltext)

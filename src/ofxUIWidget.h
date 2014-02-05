@@ -25,6 +25,7 @@
 #pragma once
 
 #include "ofxUIWrapper.h"
+#include "ofxUIDefines.h"
 
 #ifndef OFX_UI_NO_XML
     #include "ofxXmlSettings.h"
@@ -35,6 +36,8 @@ class ofxUIWidget
 public:
     ofxUIWidget();
     virtual ~ofxUIWidget();
+    ofxUIWidget(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
+    ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
     
     virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
     virtual void initPaddingRect();
@@ -67,6 +70,9 @@ public:
 	virtual void keyPressed(int key) {}
 	virtual void keyReleased(int key) {}
 	virtual void windowResized(int w, int h) {}           		
+    
+    void setTriggerType(ofxUITriggerType _triggerType);
+    ofxUITriggerType getTriggerType();
     
 	virtual void setParent(ofxUIWidget *_parent);
     virtual ofxUIWidget *getParent();
@@ -180,7 +186,8 @@ protected:
 	bool visible;
     int ID;
     bool hit; 
-    int state; 
+    int state;
+    ofxUITriggerType triggerType; 
     bool embedded;
     bool modal;
     

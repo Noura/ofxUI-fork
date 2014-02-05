@@ -120,6 +120,7 @@ enum ofxUIWidgetType
     OFX_UI_WIDGET_DRAGABLELABELBUTTON,
     OFX_UI_WIDGET_DRAGGABLERECT,
     OFX_UI_WIDGET_DYNAMICLISTVERTICALSCROLLBARCANVAS,
+    OFX_UI_WIDGET_ENVELOPEEDITOR
 };
 
 enum ofxUIWidgetOrientation
@@ -172,6 +173,17 @@ enum ofxUIWidgetColorType
 	OFX_UI_WIDGET_COLOR_PADDED_OUTLINE = 6
     
 };
+
+enum ofxUITriggerType
+{
+    OFX_UI_TRIGGER_NONE     = 0x00,
+    OFX_UI_TRIGGER_BEGIN    = 0x01,
+    OFX_UI_TRIGGER_CHANGE   = 0x02,
+    OFX_UI_TRIGGER_END      = 0x04,
+    OFX_UI_TRIGGER_ALL      = 0x07
+};
+
+#define ofxUITriggerType int
 
 enum ofxUIThemeType
 {

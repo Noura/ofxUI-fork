@@ -9,6 +9,7 @@ void ofApp::setup(){
     bdrawGrid = false;
 	bdrawPadding = false;
 
+    ddl = NULL;
     textInput = NULL;
     img = new ofImage();
     img->loadImage("nerd_me.png");
@@ -23,7 +24,7 @@ void ofApp::setup(){
     
     gui1->loadSettings("gui1Settings.xml");
     gui2->loadSettings("gui2Settings.xml");
-    gui3->loadSettings("gui3Settings.xml");
+//    gui3->loadSettings("gui3Settings.xml");
     gui4->loadSettings("gui4Settings.xml");
     gui5->loadSettings("gui5Settings.xml");
 }
@@ -96,22 +97,27 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
             textInput->setFocus(bdrawGrid);
         }
 	}
+    else if(name == "RADIO VERTICAL")
+    {
+        ofxUIRadio *radio = (ofxUIRadio *) e.widget;
+        cout << radio->getName() << " value: " << radio->getValue() << " active name: " << radio->getActiveName() << endl; 
+    }
     else if(name == "TEXT INPUT")
     {
-        ofxUITextInput *textinput = (ofxUITextInput *) e.widget;
-        if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
+        ofxUITextInput *ti = (ofxUITextInput *) e.widget;
+        if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
         {
             cout << "ON ENTER: ";
         }
-        else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
+        else if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
         {
             cout << "ON FOCUS: ";
         }
-        else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
+        else if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
         {
             cout << "ON BLUR: ";
         }
-        string output = textinput->getTextString();
+        string output = ti->getTextString();
         cout << output << endl;
     }
 }
@@ -121,7 +127,7 @@ void ofApp::exit()
 {
     gui1->saveSettings("gui1Settings.xml");
     gui2->saveSettings("gui2Settings.xml");
-    gui3->saveSettings("gui3Settings.xml");
+//    gui3->saveSettings("gui3Settings.xml");
     gui4->saveSettings("gui4Settings.xml");
     gui5->saveSettings("gui5Settings.xml");
     
@@ -132,6 +138,7 @@ void ofApp::exit()
     delete gui5;
 	delete[] buffer;
     delete img;
+    delete env;
 }
 
 //--------------------------------------------------------------
@@ -150,6 +157,51 @@ void ofApp::keyPressed(int key){
             }
         }
 			break;
+
+		case 'T':
+        {
+            if(tm != NULL)
+            {
+                int cols = tm->getColumnCount();
+                int rows = tm->getRowCount();
+                for(int row = 0; row < rows; row++)
+                {
+                    for(int col = 0; col < cols; col++)
+                    {
+                        cout << tm->getState(row, col) << "\t";
+                    }
+                    cout << endl;
+                }
+            }
+        }
+			break;
+
+		case 'd':
+        {
+            if(ddl != NULL)
+            {
+                vector<ofxUIWidget *> selected = ddl->getSelected();
+                for(vector<ofxUIWidget *>::iterator it = selected.begin(); it != selected.end(); ++it)
+                {
+                    ofxUILabelToggle *lt = (ofxUILabelToggle *) (*it);
+                    cout << lt->getName() << endl;
+                }
+            }
+        }
+			break;
+            
+        case 'D':
+        {
+            if(ddl != NULL)
+            {
+                vector<string> names = ddl->getSelectedNames();
+                for(vector<string>::iterator it = names.begin(); it != names.end(); ++it)
+                {
+                    cout << (*it) << endl;
+                }
+            }
+        }
+			break;
             
 		case 'r':
         {
@@ -159,9 +211,19 @@ void ofApp::keyPressed(int key){
             }
         }
 			break;
-
+            
 		case 'f':
 			ofToggleFullscreen();
+			break;
+            
+        case 'F':
+        {
+            if(tm != NULL)
+            {
+                tm->setDrawOutlineHighLight(!tm->getDrawOutlineHighLight());
+//                tm->setDrawPaddingOutline(!tm->getDrawPaddingOutline());
+            }
+        }
 			break;
             
 		case 'h':
@@ -251,9 +313,9 @@ void ofApp::setGUI1()
     
     gui1->addSpacer();
 	gui1->addLabel("H SLIDERS");
-	gui1->addSlider("RED", 0.0, 255.0, red);
-	gui1->addSlider("GREEN", 0.0, 255.0, green);
-	gui1->addSlider("BLUE", 0.0, 255.0, blue);
+	gui1->addSlider("RED", 0.0, 255.0, red)->setTriggerType(OFX_UI_TRIGGER_ALL);
+	gui1->addSlider("GREEN", 0.0, 255.0, green)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE|OFX_UI_TRIGGER_END);
+	gui1->addSlider("BLUE", 0.0, 255.0, blue)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE);
     
     gui1->addSpacer();
     gui1->addLabel("V SLIDERS");
@@ -297,6 +359,7 @@ void ofApp::setGUI2()
     gui2->addSpacer();
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
     textInput = gui2->addTextInput("TEXT INPUT", "Input Text");
+    textInput->setAutoUnfocus(false); 
     gui2->addLabel("AUTO CLEAR DISABLED", OFX_UI_FONT_SMALL);
     gui2->addTextInput("TEXT INPUT2", "Input Text")->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
@@ -351,7 +414,7 @@ void ofApp::setGUI3()
     gui3->setGlobalButtonDimension(24);
     gui3->addLabel("MATRIX", OFX_UI_FONT_MEDIUM);
     gui3->addToggleMatrix("MATRIX1", 3, 3);
-    gui3->addToggleMatrix("MATRIX2", 3, 6);
+    tm = gui3->addToggleMatrix("MATRIX2", 3, 6);
     gui3->addToggleMatrix("MATRIX3", 1, 4);
 
     gui3->addSpacer();
@@ -360,6 +423,15 @@ void ofApp::setGUI3()
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
     gui3->addImageToggle("IMAGETGL", "GUI/images/Preview.png", false);
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
+
+    gui3->addSpacer();
+    env = new ofxUIEnvelope();
+    for(float i = 0; i <= 5; i++)
+    {
+        env->addPoint(i/5.0, i/5.0);
+    }
+    
+    gui3->addWidgetDown(new ofxUIEnvelopeEditor("ENV", env, 200, 128));
     
     vector<string> items;
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
@@ -371,7 +443,8 @@ void ofApp::setGUI3()
     
     gui3->addSpacer();
     gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-    gui3->addDropDownList("DROP DOWN LIST", items);
+    ddl = gui3->addDropDownList("DROP DOWN LIST", items);
+    ddl->setAllowMultiple(true);
 
     gui3->setGlobalButtonDimension(OFX_UI_GLOBAL_BUTTON_DIMENSION);
     

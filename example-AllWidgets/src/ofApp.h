@@ -45,6 +45,10 @@ public:
 	void guiEvent(ofxUIEventArgs &e);
     
     ofxUIMovingGraph *mg;
+    ofxUIDropDownList *ddl;
+    ofxUIToggleMatrix *tm;
+    
     float *buffer;
     ofImage *img;
+    ofxUIEnvelope *env; 
 };

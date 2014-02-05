@@ -156,7 +156,7 @@ void ofxUIMultiLineTextInput::drawFill() {
     {
         ofxUIFill(); 
         ofxUISetColor(color_fill);
-        textArea->getLabelWidget()->drawString(rect->x + textArea->xCorrection + 2.0, yCorrection + textArea->getLineBottomY(0), defaultstring);
+        textArea->getLabelWidget()->drawString(rect->x + 2.0, yCorrection + textArea->getLineBottomY(0), defaultstring);
     }
 }
 

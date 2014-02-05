@@ -29,6 +29,8 @@
 
 class ofxUITextArea : public ofxUIWidgetWithLabel
 {
+    friend class ofxUIMultiLineTextInput;
+    
 public:
     ofxUITextArea(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);
     void init(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);

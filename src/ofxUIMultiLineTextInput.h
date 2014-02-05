@@ -22,7 +22,6 @@ class ofxUIMultiLineTextInput : public ofxUIWidget
 {
 public:
 
-    ~ofxUIMultiLineTextInput();
     ofxUIMultiLineTextInput(string _name, string _textString, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM); // TODO should this be OFX_UI_FONT_MEDIUM or OFX_UI_FONT_MEDIUM_SIZE ???
     
     void moveCursorBackward();

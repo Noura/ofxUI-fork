@@ -9,10 +9,6 @@
 
 #include "ofxUIMultiLineTextInput.h"
 
-ofxUIMultiLineTextInput::~ofxUIMultiLineTextInput() {
-    delete textArea;
-}
-
 ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textString, float w, float h, float x, float y, int _size)
 : ofxUIWidget()
 , clicked(false)

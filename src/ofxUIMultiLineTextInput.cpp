@@ -467,18 +467,18 @@ int ofxUIMultiLineTextInput::getTriggerType() {
 }
 
 //TODO make sure trigger types work. also what is setTriggerOnClick for? how is that different than the other triggers?
-void setAutoClear(bool _autoclear) {
+void ofxUIMultiLineTextInput::setAutoClear(bool _autoclear) {
     autoclear = _autoclear;
 }
 
-void setTriggerOnClick(bool _triggerOnClick) {
+void ofxUIMultiLineTextInput::setTriggerOnClick(bool _triggerOnClick) {
     triggerOnClick = _triggerOnClick;
 }
 
-bool isPassword() {
+bool ofxUIMultiLineTextInput::isPassword() {
     return textArea->password;
 }
 
-void isPassword(bool val) {
+void ofxUIMultiLineTextInput::isPassword(bool val) {
     textArea->password = val;
 }

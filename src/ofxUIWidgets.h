@@ -63,7 +63,4 @@
 #include "ofxUIImage.h"
 #include "ofxUIBaseDraws.h"
 #include "ofxUIImageSampler.h"
-<<<<<<< HEAD
 #include "ofxUIDraggableRect.h"
-=======
->>>>>>> text-area

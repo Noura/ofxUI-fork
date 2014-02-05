@@ -43,6 +43,7 @@
 #include "ofxUIEnvelopeEditor.h" // Custom Envelope Editor Widget
 #include "ofxUI2DGraph.h"
 #include "ofxUITextInput.h"
+#include "ofxUIMultiLineTextInput.h"
 #include "ofxUITextArea.h"
 #include "ofxUINumberDialer.h"
 #include "ofxUILabelButton.h"

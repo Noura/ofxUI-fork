@@ -250,7 +250,6 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                 triggerEvent(this);
                 if(autoclear) {
                     string input = textArea->textstring.substr();
-                    ofNotifyEvent(inputSubmitted, input, this);
                     clearText();
                     clicked = true;
                 }

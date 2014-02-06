@@ -101,85 +101,65 @@ void ofxUITextArea::setTextString(string s)
 
 void ofxUITextArea::formatTextString()
 {
-    float rectWidthLimit = rect->getWidth()-padding*6;
-    float rectHeightLimit = rect->getHeight()-label->getLineHeight()-padding;
-    bool overheight = false;
+    textLines.clear();
     
     lineHeight = label->getStringHeight("1");
     lineSpaceSize = padding*2;
     
-    offsetY = floor(padding*.125);
-    
-    if(label->getStringWidth(textstring) <= rectWidthLimit)
-    {
-        if(textstring.size() > 0)
-        {
-            textLines.push_back(textstring);
-        }
+    float widthLimit = rect->getWidth() - label->getStringWidth("M");
+    if (widthLimit < label->getStringWidth("M")) {
+        return;
     }
-    else
-    {
-        float tempWidth;
-        float tempHeight;
-        textLines.clear();
-        string line = "";
-        size_t i=0;
-        
-        while (i < textstring.size() && !overheight) //if not at the end of the string && not over the rect's height
-        {
-            tempWidth = label->getStringWidth(line);
-            if(tempWidth < rectWidthLimit)
-            {
-                line+=textstring.at(i);
-                i++;
-                if(i == textstring.size())
-                {
-                    textLines.push_back(line);
-                }
-            }
-            else
-            {
-                bool notFound = true;
-                
-                while (notFound && !overheight)
-                {
-                    if(strncmp(&textstring.at(i), " ",1) == 0)
-                    {
-                        tempHeight = (textLines.size()+1)*(lineHeight+lineSpaceSize);
-                        //                        cout << tempHeight << endl;
-                        //                        cout << rectHeightLimit << endl;
-                        if(!autoSize && tempHeight >= rectHeightLimit)
-                        {
-                            textLines.push_back(line);
-                            textLines[textLines.size()-1]+="...";
-                            overheight = true;
-                        }
-                        notFound = false;
-                        if(!overheight)
-                        {
-                            textLines.push_back(line);
-                            line.clear();
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        i--;
-                        line.erase(line.end()-1);
-                    }
-                }
-            }
+    float heightLimit = rect->getHeight();
+    
+    int numLinesLimit;
+    if (autoSize) {
+        numLinesLimit = 0;
+    } else {
+        float denominator = lineHeight + lineSpaceSize;
+        if (denominator == 0) { // before fonts are initialized
+            denominator = OFX_UI_FONT_LARGE_SIZE;
         }
+        numLinesLimit = (int)heightLimit / denominator;
     }
     
-    if(autoSize)
-    {
+    string line = "";
+    for (int i = 0; i < textstring.size(); i++) {
+        if (!autoSize && textLines.size() > numLinesLimit) {
+            break;
+        }
+        if (label->getStringWidth(line) >= widthLimit) {
+            if (line.size() == 0) {
+                break;
+            }
+            // try to break line at white space
+            int whitespace_index = line.size() - 1;
+            while (whitespace_index > 0 &&
+                   !isspace(line.at(whitespace_index))) {
+                whitespace_index--;
+            }
+            if (whitespace_index <= 0) {
+                // white space not found, or found at first char
+                textLines.push_back(line.substr(0, line.size()-1));
+                line = line.substr(line.size()-1);
+            } else {
+                // white space found
+                textLines.push_back(line.substr(0, whitespace_index));
+                if (whitespace_index + 1 < line.size())
+                    line = line.substr(whitespace_index + 1);
+                else
+                    line = "";
+            }
+        }
+        char c = textstring.at(i);
+        line += c;
+    }
+    if (line != "" && !(!autoSize && textLines.size() > numLinesLimit)) {
+        textLines.push_back(line);
+    }
+    
+    if(autoSize) {
         rect->setHeight((lineHeight+lineSpaceSize)*textLines.size()-lineSpaceSize);
-    }
-    
-    if(overheight)
-    {
-        rect->setHeight(MAX(rect->getHeight(),(lineHeight+lineSpaceSize)*textLines.size()-lineSpaceSize));
     }
 }
 

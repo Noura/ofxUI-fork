@@ -9,10 +9,6 @@
 
 #include "ofxUIMultiLineTextInput.h"
 
-ofxUIMultiLineTextInput::~ofxUIMultiLineTextInput() {
-    delete textArea;
-}
-
 ofxUIMultiLineTextInput::ofxUIMultiLineTextInput(string _name, string _textString, float w, float h, float x, float y, int _size)
 : ofxUIWidget()
 , clicked(false)
@@ -110,7 +106,6 @@ int ofxUIMultiLineTextInput::setCursorPosition(int stringIndex) {
 
 void ofxUIMultiLineTextInput::clearText() {
     textArea->textstring.clear();
-    //textArea->formatDisplayString();
     textArea->formatTextString();
     cursorChar = 0;
     cursorLine = 0;
@@ -224,7 +219,6 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                     int i = getStringIndex();
                     if (i > 0) {
                         textArea->textstring.erase(i - 1, 1);
-                        //textArea->formatDisplayString();
                         textArea->formatTextString();
                         setCursorPosition(i - 1);
                     }
@@ -238,7 +232,6 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                     int i = getStringIndex();
                     if (i < textArea->textstring.size()) {
                         textArea->textstring.erase(i, 1);
-                        //textArea->formatDisplayString();
                         textArea->formatTextString();
                         setCursorPosition(i);
                     }
@@ -346,7 +339,6 @@ void ofxUIMultiLineTextInput::keyPressed(int key) {
                 }
                 int i = getStringIndex();
                 textArea->textstring.insert(i, 1, c);
-                //textArea->formatDisplayString();
                 textArea->formatTextString();
                 setCursorPosition(i + 1);
             }

@@ -106,7 +106,7 @@ void ofxUITextArea::formatTextString()
     lineHeight = label->getStringHeight("1");
     lineSpaceSize = padding*2;
     
-    float widthLimit = rect->getWidth() - label->getStringWidth("M");
+    float widthLimit = rect->getWidth() - label->getStringWidth("M")- 2 * padding;
     if (widthLimit < label->getStringWidth("M")) {
         return;
     }
@@ -145,10 +145,7 @@ void ofxUITextArea::formatTextString()
             } else {
                 // white space found
                 textLines.push_back(line.substr(0, whitespace_index));
-                if (whitespace_index + 1 < line.size())
-                    line = line.substr(whitespace_index + 1);
-                else
-                    line = "";
+                line = line.substr(whitespace_index);
             }
         }
         char c = textstring.at(i);

@@ -52,11 +52,14 @@ void ofxUIMultiLineTextInput::moveCursorBackward() {
 }
 
 void ofxUIMultiLineTextInput::moveCursorForward() {
-    if(textArea->textstring == "" ||
-       cursorChar < textArea->textLines[cursorLine].size() - 1) {
+    if (textArea->textstring == "") {
+        cursorChar = 0;
+        cursorLine = 0;
+        return;
+    }
+    if(cursorChar < textArea->textLines[cursorLine].size()) {
         cursorChar++;
-    } else if (cursorLine < textArea->textLines.size() &&
-               cursorLine < textArea->textLines.size() - 1) {
+    } else if (cursorLine < textArea->textLines.size() - 1) {
         cursorLine++;
         cursorChar = 0;
     }
@@ -125,6 +128,11 @@ void ofxUIMultiLineTextInput::drawCursor() {
     
     float x = textArea->getRect()->getX() + xOffset;
     float y = textArea->getLineTopY(cursorLine);
+    
+    ofxUIRectangle * parentRect = parent->getRect();
+    x = CLAMP(x, parentRect->x + rect->x, parentRect->x + rect->x + rect->width - padding);
+    y = CLAMP(y, parentRect->y + rect->y, parentRect->y + rect->y + rect->height - padding);
+
     
     // cursor color oscillates
     ofxUIFill();

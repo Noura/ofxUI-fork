@@ -1118,7 +1118,7 @@ ofxUIWidget* ofxUICanvas::addWidgetPosition(ofxUIWidget *widget, ofxUIWidgetPosi
             
             break;
         case OFX_UI_ALIGN_CENTER:   //Experimental
-            
+            widgetRect->x = (rect->getWidth()-widgetRect->getWidth())*0.5;
             break;
         case OFX_UI_ALIGN_RIGHT:
             widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing;
@@ -1334,7 +1334,7 @@ ofxUISlider* ofxUICanvas::addSlider(string _name, float _min, float _max, float 
 ofxUIIntSlider* ofxUICanvas::addIntSlider(string _name, int _min, int _max, int _value)
 {
     ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
-    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);    
     return widget;
 }
 
@@ -1649,31 +1649,6 @@ ofxUI2DPad* ofxUICanvas::add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }
-
-/* CUSTOM ENVELOPE EDITOR */
-ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float h)
-{
-    if(h == -1)
-    {
-        h = globalGraphHeight;
-    }
-    float dim = rect->getWidth()-widgetSpacing*2;
-    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, dim, h, 0, 0);
-    addWidgetPosition(widget, widgetPosition, widgetAlign);
-    return widget;
-}
-
-ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x, float y)
-{
-    if(h == -1)
-    {
-        h = globalGraphHeight;
-    }
-    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, w, h, x, y);
-    addWidgetPosition(widget, widgetPosition, widgetAlign);
-    return widget;
-}
-
 
 ofxUITextInput* ofxUICanvas::addTextInput(string _name, string _textstring, int _size)
 {
